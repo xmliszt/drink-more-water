@@ -1,5 +1,10 @@
 // Sample server that serves direct HTML
 
+const sqlite3 = required("sqlite3").verbose();
+const db = new sqlite3.Database("db");
+
+db.serialize(() => {});
+
 const http = require("http");
 const host = "0.0.0.0";
 const port = 8000;
