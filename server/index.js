@@ -3,25 +3,27 @@ const express = require("express");
 const bodyParser = require("body-parser");
 require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
+// Create server
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Health check
 app.get("/health", (req, res) => {
   res.send({
     message: "hello",
   });
 });
 
+// Connect routers
 const userRouter = require("./routers/userRouter");
-
 app.use("/user", userRouter);
 
-const port = process.env.PORT
-const host = process.env.HOST
+// Start listening
+const port = process.env.PORT;
+const host = process.env.HOST;
 app.listen(port, host, () => {
   console.log(
-    `${process.env.NODE_ENV.toUpperCase()} Server is running on http://${host
-    }:${port}`
+    `${process.env.NODE_ENV.toUpperCase()} Server is running on http://${host}:${port}`
   );
 });

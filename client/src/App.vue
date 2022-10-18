@@ -7,6 +7,9 @@
 </template>
 
 <style scoped>
+button {
+  background-color: transparent;
+}
 button.water {
   color: rgb(30, 135, 255);
   font-size: 100px;
@@ -32,5 +35,6 @@ button.water svg {
 
 button:active {
   opacity: 1;
+  transform: scale(0.9);
 }
 </style>
