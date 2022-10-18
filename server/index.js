@@ -1,21 +1,27 @@
 // Sample server that serves direct HTML
+const express = require("express");
+const bodyParser = require("body-parser");
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
-const sqlite3 = required("sqlite3").verbose();
-const db = new sqlite3.Database("db");
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-db.serialize(() => {});
+app.get("/health", (req, res) => {
+  res.send({
+    message: "hello",
+  });
+});
 
-const http = require("http");
-const host = "0.0.0.0";
-const port = 8000;
+const userRouter = require("./routers/userRouter");
 
-const requestListener = function (req, res) {
-  res.setHeader("Content-Type", "text/html");
-  res.writeHead(200);
-  res.end(`<html><body><h1>This is HTML</h1></body></html>`);
-};
+app.use("/user", userRouter);
 
-const server = http.createServer(requestListener);
-server.listen(port, host, () => {
-  console.log(`Server is running on http://${host}:${port}`);
+const port = process.env.PORT
+const host = process.env.HOST
+app.listen(port, host, () => {
+  console.log(
+    `${process.env.NODE_ENV.toUpperCase()} Server is running on http://${host
+    }:${port}`
+  );
 });
