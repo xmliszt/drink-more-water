@@ -4,13 +4,15 @@ const {
   getUserByName,
   deleteUserByName,
   setUserActive,
+  getAllUsers,
 } = require("../services/userService");
 const router = express.Router();
 
 // Create a user
 router.post("/", (req, res) => {
   let name = req.body.name;
-  createUser(name)
+  let pwd = req.body.password;
+  createUser(name, pwd)
     .then(() => {
       res.send({
         success: true,
@@ -20,7 +22,10 @@ router.post("/", (req, res) => {
       console.log(err);
       res.status(501).json({
         success: false,
-        error: err,
+        error: {
+          ...err,
+          message: err.message,
+        },
       });
     });
 });
@@ -37,7 +42,10 @@ router.get("/", (req, res) => {
       console.log(err);
       res.status(501).json({
         success: false,
-        error: err,
+        error: {
+          ...err,
+          message: err.message,
+        },
       });
     });
 });
@@ -55,15 +63,18 @@ router.delete("/", (req, res) => {
     .catch((err) => {
       res.status(501).json({
         success: false,
-        error: err,
+        error: {
+          ...err,
+          message: err.message,
+        },
       });
     });
 });
 
 // Update a user's activeness status
 router.put("/", (req, res) => {
-  let name = req.query.name;
-  let active = req.body.isActive;
+  let name = req.body.name;
+  let active = req.body.active;
   setUserActive(name, active)
     .then((user) => {
       res.send({
@@ -74,7 +85,30 @@ router.put("/", (req, res) => {
     .catch((err) => {
       res.status(501).json({
         success: false,
-        error: err,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Get all users
+router.get("/all", (req, res) => {
+  getAllUsers()
+    .then((users) => {
+      res.send({
+        success: true,
+        users,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
       });
     });
 });

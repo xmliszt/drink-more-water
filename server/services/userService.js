@@ -1,11 +1,11 @@
-const db = require("./db");
+const db = require("../database/db");
 
 // CREATE
-async function createUser(name) {
+async function createUser(name, password) {
   return new Promise((res, rej) => {
     db.run(
-      `INSERT INTO users (name, active) VALUES (?,?)`,
-      [name, false],
+      `INSERT INTO users (name, password, active) VALUES (?,?,?)`,
+      [name, password, false],
       (err) => {
         if (err) {
           rej(err);
@@ -20,8 +20,8 @@ async function createUser(name) {
 async function setUserActive(name, active) {
   return new Promise((res, rej) => {
     db.run(
-      `UPDATE users WHERE name = ? SET active = ?`,
-      [name, active],
+      `UPDATE users SET active = ? WHERE name = ? `,
+      [active, name],
       (err) => {
         if (err) {
           rej(err);
@@ -63,9 +63,26 @@ async function deleteUserByName(name) {
   });
 }
 
+async function getAllUsers() {
+  return new Promise((res, rej) => {
+    db.all(`SELECT * FROM users`, (err, users) => {
+      if (err) {
+        rej(err);
+      } else {
+        users.map((user) => {
+          user.password = "******";
+          return user;
+        });
+        res(users);
+      }
+    });
+  });
+}
+
 module.exports = {
   createUser,
   setUserActive,
   getUserByName,
   deleteUserByName,
+  getAllUsers,
 };
