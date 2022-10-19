@@ -5,6 +5,10 @@ const {
   deleteUserByName,
   setUserActive,
   getAllUsers,
+  changeUserGoal,
+  changeUserVolume,
+  getRanks,
+  updatePoints,
 } = require("../services/userService");
 const router = express.Router();
 
@@ -12,7 +16,9 @@ const router = express.Router();
 router.post("/", (req, res) => {
   let name = req.body.name;
   let pwd = req.body.password;
-  createUser(name, pwd)
+  let vol = req.body.volume;
+  let goal = req.body.goal;
+  createUser(name, pwd, vol, goal)
     .then(() => {
       res.send({
         success: true,
@@ -72,10 +78,54 @@ router.delete("/", (req, res) => {
 });
 
 // Update a user's activeness status
-router.put("/", (req, res) => {
+router.put("/active", (req, res) => {
   let name = req.body.name;
   let active = req.body.active;
   setUserActive(name, active)
+    .then((user) => {
+      res.send({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Update a user's goal
+router.put("/goal", (req, res) => {
+  let name = req.body.name;
+  let goal = req.body.goal;
+  changeUserGoal(name, goal)
+    .then((user) => {
+      res.send({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Update a user's volume
+router.put("/volume", (req, res) => {
+  let name = req.body.name;
+  let volume = req.body.volume;
+  changeUserVolume(name, volume)
     .then((user) => {
       res.send({
         success: true,
@@ -100,6 +150,48 @@ router.get("/all", (req, res) => {
       res.send({
         success: true,
         users,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Update points for user
+router.put("/point", (req, res) => {
+  let name = req.body.name;
+  let points = req.body.points;
+  updatePoints(name, points)
+    .then((user) => {
+      res.send({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Get the ranks
+router.get("/rank", (req, res) => {
+  getRanks()
+    .then((ranks) => {
+      res.send({
+        success: true,
+        rank: ranks,
       });
     })
     .catch((err) => {
