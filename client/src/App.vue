@@ -1,40 +1,39 @@
 <template>
   <main>
-    <button class="water">
-      <font-awesome-icon icon="fa-solid fa-glass-water" />
-    </button>
+    <div class="login-card">
+      <DWButton size="large" @click="kickstart">DRINK WATER</DWButton>
+    </div>
+    <DWWaveTank ref="tank" :initialProgress="30" :showProgress="showProgress" />
   </main>
 </template>
 
-<style scoped>
-button {
-  background-color: transparent;
-}
-button.water {
-  color: rgb(30, 135, 255);
-  font-size: 100px;
-  border-width: 0px;
-  transition-property: opacity transform;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-in-out;
-  opacity: 0.9;
-}
+<script>
+import DWWaveTank from "@/components/DWWaveTank.vue";
+import DWButton from "@/components/DWButton.vue";
+export default {
+  components: { DWWaveTank, DWButton },
+  data() {
+    return {
+      progress: 0,
+      showProgress: false,
+    };
+  },
+  methods: {
+    kickstart: function () {},
+    addWater: function () {
+      this.progress += 5;
+      this.$refs.tank.setProgress(this.progress);
+    },
+  },
+};
+</script>
 
-button.water svg {
-  filter: drop-shadow(0px 5px 15px 0px rgba(1, 1, 1, 0.2));
-  -webkit-filter: drop-shadow(0px 5px 2px rgba(1, 1, 1, 0.2));
-}
-
-@media (hover: hover) {
-  button:hover {
-    cursor: pointer;
-    opacity: 0.7;
-    transform: scale(1.1);
-  }
-}
-
-button:active {
-  opacity: 1;
-  transform: scale(0.9);
+<style>
+.login-card {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
