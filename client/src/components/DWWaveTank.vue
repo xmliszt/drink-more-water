@@ -1,29 +1,44 @@
 <template>
   <div class="tank">
-    <div class="wave" :style="waveStyle"></div>
-    <h1 v-show="showProgress">{{ progress }}%</h1>
+    <div :class="['wave', goalAchieved && 'success']" :style="waveStyle"></div>
+    <h1 v-show="showVolume || false" class="volume">{{ totalVolume }} mL</h1>
+    <h1 v-show="showGoal || false" :class="['goal', goalAchieved && 'success']">
+      {{ goalText }}
+    </h1>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["showProgress", "initialProgress"],
+  props: ["showGoal", "showVolume", "volume", "goal", "totalVolume"],
   data() {
     return {
-      progress: 0,
       waveStyle: {
         height: 0,
       },
+      goalAchieved: false,
     };
   },
-  methods: {
-    setProgress: function (progress) {
-      this.waveStyle.height = `${progress}%`;
-      this.progress = progress;
+  computed: {
+    goalText() {
+      if (this.goalAchieved) {
+        return "You have completed today's goal!";
+      } else {
+        return `Goal For Today: ${this.goal} mL`;
+      }
     },
   },
-  created() {
-    this.setProgress(this.initialProgress);
+  methods: {
+    setTotalVolume(volume) {
+      let percentage = Math.floor((volume / this.goal) * 100);
+      if (percentage >= 100) {
+        this.goalAchieved = true;
+      }
+      this.waveStyle.height = `${percentage}%`;
+    },
+    setWaveHeight(percentage) {
+      this.waveStyle.height = `${percentage}%`;
+    },
   },
 };
 </script>
@@ -41,9 +56,22 @@ export default {
   pointer-events: none;
 }
 
-.tank h1 {
+.tank h1.volume {
   font-weight: 900;
-  font-size: 10rem;
+  font-size: 5rem;
+}
+
+.tank h1.goal {
+  font-weight: 900;
+  font-size: 1rem;
+  position: fixed;
+  top: 16px;
+  color: var(--color-accent);
+  z-index: 999;
+}
+
+.tank h1.goal.success {
+  color: var(--color-background-soft);
 }
 
 .wave {
@@ -55,7 +83,14 @@ export default {
   right: 0;
   background-color: var(--color-accent);
   animation: wave 10s linear infinite;
-  transition: height 0.7s ease;
+  transition-property: height background-color;
+  transition-duration: 0.7s;
+  transition-timing-function: ease;
+  opacity: 0.8;
+}
+
+.wave.success {
+  background-color: var(--color-success);
 }
 
 .wave::before {

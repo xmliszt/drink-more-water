@@ -18,14 +18,34 @@ router.post("/", (req, res) => {
   let pwd = req.body.password;
   let vol = req.body.volume;
   let goal = req.body.goal;
-  createUser(name, pwd, vol, goal)
-    .then(() => {
-      res.send({
-        success: true,
-      });
+  getAllUsers()
+    .then((users) => {
+      let names = users.map((user) => user.name);
+      if (names.includes(name)) {
+        res.status(409).json({
+          success: false,
+          error: "User exists!",
+        });
+      } else {
+        createUser(name, pwd, vol, goal)
+          .then(() => {
+            res.send({
+              success: true,
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(501).json({
+              success: false,
+              error: {
+                ...err,
+                message: err.message,
+              },
+            });
+          });
+      }
     })
     .catch((err) => {
-      console.log(err);
       res.status(501).json({
         success: false,
         error: {

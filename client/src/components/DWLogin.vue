@@ -18,29 +18,15 @@
       :class="[passwordInput.isError && 'error']"
       @input="onPasswordChange"
     />
-    <p>{{ volumeInput.prompt }}</p>
-    <div class="volume-input">
-      <input
-        id="volume"
-        type="number"
-        :placeholder="volumeInput.placeholder"
-        v-model="form.volume"
-        :class="[volumeInput.isError && 'error']"
-        @input="onVolumeChange"
-      />
-      <label>mL</label>
-    </div>
     <div class="buttons">
-      <DWButton size="medium" type="success" @click="onLogin">LOGIN</DWButton>
-      <DWButton size="medium" type="warning" @click="onGuestEnter"
-        >ENTER AS GUEST</DWButton
-      >
+      <DWButton size="medium" type="primary" @click="onLogin">LOGIN</DWButton>
     </div>
   </div>
 </template>
 
 <script>
 import DWButton from "@/components/DWButton.vue";
+import { loginUser } from "@/services";
 
 export default {
   components: { DWButton },
@@ -52,64 +38,44 @@ export default {
         isError: false,
       },
       passwordInput: {
-        prompt: "Set a password (optional for guest)",
-        placeholder: "****** (at least 6 characters)",
-        isError: false,
-      },
-      volumeInput: {
-        prompt: "What is the capacity of your water cup? (mL)",
-        placeholder: "550",
+        prompt: "Enter your password",
+        placeholder: "******",
         isError: false,
       },
       form: {
         username: "",
         password: "",
-        volume: "",
       },
     };
   },
   methods: {
-    onLogin() {
+    validate() {
       if (this.form.username === "") {
         this.usernameInput.isError = true;
       } else {
         this.usernameInput.isError = false;
-      }
-      if (this.form.password.length < 6) {
-        this.passwordInput.isError = true;
-      } else {
-        this.passwordInput.isError = false;
-      }
-      try {
-        let volume = Number(this.form.volume);
-        this.form.volume = volume;
-        if (this.form.volume <= 0) {
-          this.volumeInput.isError = true;
-        } else {
-          console.log(this.form);
-        }
-      } catch (err) {
-        this.volumeInput.isError = true;
       }
     },
-    onGuestEnter() {
-      if (this.form.username === "") {
-        this.usernameInput.isError = true;
-      } else {
-        this.usernameInput.isError = false;
-      }
-      this.passwordInput.isError = false;
-      try {
-        let volume = Number(this.form.volume);
-        this.form.volume = volume;
-        if (this.form.volume <= 0) {
-          this.volumeInput.isError = true;
-        } else {
-          console.log(this.form);
-        }
-      } catch (err) {
-        this.volumeInput.isError = true;
-      }
+    onLogin() {
+      this.validate();
+      !this.usernameInput.isError &&
+        !this.passwordInput.isError &&
+        loginUser(this.form.username, this.form.password)
+          .then(() => {
+            this.$emit("onLoginSuccess", this.form.username);
+          })
+          .catch((err) => {
+            if (err === "wrong password") {
+              alert("Wrong password!");
+              this.passwordInput.isError = true;
+            } else if (err === "user not exist") {
+              alert("User does not exist! Please register!");
+              this.$emit("onOpenRegister");
+            } else {
+              console.log(err);
+              alert("Failed to login!");
+            }
+          });
     },
     onUsernameChange({ target }) {
       if (target.value.length > 0) {
@@ -119,11 +85,6 @@ export default {
     onPasswordChange({ target }) {
       if (target.value.length > 0) {
         this.passwordInput.isError = false;
-      }
-    },
-    onVolumeChange({ target }) {
-      if (target.value.length > 0) {
-        this.volumeInput.isError = false;
       }
     },
   },
@@ -142,13 +103,13 @@ export default {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 10px;
   padding: 20px;
 }
 
 .login-card p {
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--color-text);
   text-align: center;
 }
@@ -177,11 +138,6 @@ export default {
 .login-card input:focus {
   border-color: var(--color-accent);
   outline: none;
-}
-
-.login-card > div.volume-input {
-  display: flex;
-  gap: 16px;
 }
 
 .login-card > div.buttons {

@@ -17,3 +17,9 @@ main {
   overflow-y: hidden;
   overflow-x: hidden;
 }
+
+@media (hover: hover) {
+  button:hover {
+    cursor: pointer;
+  }
+}

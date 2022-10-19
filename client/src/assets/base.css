@@ -35,6 +35,7 @@
 
   --color-accent: rgba(45, 154, 232, 0.886);
   --color-accent-secondary: rgba(82, 197, 255, 0.918);
+  --color-accent-fade: rgba(45, 154, 232, 0.4);
 
   --color-success: #67c23a;
   --color-warning: #e6a23c;
