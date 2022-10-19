@@ -1,17 +1,16 @@
 <template>
-  <button :class="[size || 'small']"><slot /></button>
+  <button :class="[size || 'small', type || 'primary']"><slot /></button>
 </template>
 
 <script>
 export default {
-  props: ["size"],
+  props: ["size", "type"],
 };
 </script>
 
 <style scoped>
 button {
   color: white;
-  background-color: var(--color-accent);
   border: 2px solid var(--vt-c-divider-light-1);
   font-weight: 900;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 6px 0px 0px;
@@ -43,6 +42,22 @@ button.large {
   height: 68px;
   border-radius: 34px;
   border-width: 8px;
-  font-size: 35px;
+  font-size: 32px;
+}
+
+button.primary {
+  background-color: var(--color-primary);
+}
+button.danger {
+  background-color: var(--color-danger);
+}
+button.success {
+  background-color: var(--color-success);
+}
+button.warning {
+  background-color: var(--color-warning);
+}
+button.info {
+  background-color: var(--color-info);
 }
 </style>

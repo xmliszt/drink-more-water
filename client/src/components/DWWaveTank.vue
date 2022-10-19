@@ -55,7 +55,7 @@ export default {
   right: 0;
   background-color: var(--color-accent);
   animation: wave 10s linear infinite;
-  transition: height 0.3s ease-in-out;
+  transition: height 0.7s ease;
 }
 
 .wave::before {
