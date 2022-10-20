@@ -20,13 +20,16 @@
     />
     <div class="buttons">
       <DWButton size="medium" type="primary" @click="onLogin">LOGIN</DWButton>
+      <DWButton size="medium" type="warning" @click="onOpenRegister"
+        >REGISTER</DWButton
+      >
     </div>
   </div>
 </template>
 
 <script>
 import DWButton from "@/components/DWButton.vue";
-import { loginUser } from "@/services";
+import { loginUser, getUser } from "@/services";
 
 export default {
   components: { DWButton },
@@ -62,7 +65,18 @@ export default {
         !this.passwordInput.isError &&
         loginUser(this.form.username, this.form.password)
           .then(() => {
-            this.$emit("onLoginSuccess", this.form.username);
+            getUser(this.form.username)
+              .then((response) => {
+                this.$emit("onLoginSuccess", {
+                  name: response.data.name,
+                  goal: response.data.goal,
+                  volume: response.data.volume,
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                alert("Failed to login!");
+              });
           })
           .catch((err) => {
             if (err === "wrong password") {
@@ -86,6 +100,9 @@ export default {
       if (target.value.length > 0) {
         this.passwordInput.isError = false;
       }
+    },
+    onOpenRegister() {
+      this.$emit("onOpenRegister");
     },
   },
 };

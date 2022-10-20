@@ -26,14 +26,15 @@
         <DWDrinkButton :volume="volume" @click="drink" />
       </div>
     </Transition>
-    <DWWaveTank
-      ref="tank"
-      :showVolume="showVolume"
-      :showGoal="showGoal"
-      :volume="volume"
-      :goal="goal"
-      :totalVolume="totalVolume"
-    />
+    <Transition name="fade">
+      <div v-show="showLogout" class="logout">
+        <span>{{ greeting }}</span>
+        <button @click="onLogout">
+          <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
+        </button>
+      </div>
+    </Transition>
+    <DWWaveTank ref="tank" :showVolume="showVolume" :showGoal="showGoal" />
   </main>
 </template>
 
@@ -43,56 +44,56 @@ import DWButton from "@/components/DWButton.vue";
 import DWRegister from "@/components/DWRegister.vue";
 import DWLogin from "@/components/DWLogin.vue";
 import DWDrinkButton from "@/components/DWDrinkButton.vue";
-import { getTotalVolume, getUser, addRecord } from "@/services";
+import { getTotalVolume, addRecord } from "@/services";
+import { getUser } from "./services";
 
 export default {
   components: { DWWaveTank, DWButton, DWRegister, DWLogin, DWDrinkButton },
   data() {
     return {
       volume: 0,
-      goal: 0,
-      totalVolume: 0,
       showVolume: false,
       showGoal: false,
       showStart: true,
       showLogin: false,
       showRegister: false,
       showDrinkButton: false,
-      username: "",
+      showLogout: false,
+      greeting: "",
     };
   },
   methods: {
     kickstart() {
       this.showStart = false;
       this.$refs.tank.setWaveHeight(100);
-      setTimeout(() => {
-        this.showRegister = true;
-        this.showLogin = false;
-      }, 1000);
+      let username = localStorage.getItem("username");
+      if (username) {
+        getUser(username)
+          .then((response) => {
+            let user = response.data;
+            this.startWithUser(user);
+          })
+          .catch((err) => {
+            console.log(err);
+            setTimeout(() => {
+              this.showRegister = true;
+              this.showLogin = false;
+            }, 1000);
+          });
+      } else {
+        setTimeout(() => {
+          this.showRegister = true;
+          this.showLogin = false;
+        }, 1000);
+      }
     },
-    onRegisterSuccess(username) {
+    onRegisterSuccess(user) {
       this.showRegister = false;
-      this.showGoal = true;
-      this.showVolume = true;
-      getUser(username).then((user) => {
-        this.volume = user.volume;
-        this.goal = user.goal;
-      });
+      this.startWithUser(user);
     },
-    onLoginSuccess(username) {
-      this.username = username;
+    onLoginSuccess(user) {
       this.showLogin = false;
-      this.showGoal = true;
-      this.showVolume = true;
-      this.showDrinkButton = true;
-      getUser(username).then((response) => {
-        this.volume = response.data.volume;
-        this.goal = response.data.goal;
-        getTotalVolume(username).then((response) => {
-          this.totalVolume = response.data.volume;
-          this.$refs.tank.setTotalVolume(this.totalVolume);
-        });
-      });
+      this.startWithUser(user);
     },
     onOpenLogin() {
       this.showRegister = false;
@@ -106,13 +107,46 @@ export default {
         this.showRegister = true;
       }, 1000);
     },
+    startWithUser(user) {
+      localStorage.setItem("username", user.name);
+      this.showLogin = false;
+      this.showGoal = true;
+      this.showVolume = true;
+      this.showDrinkButton = true;
+      this.showLogout = true;
+
+      var ndate = new Date();
+      var hours = ndate.getHours();
+      this.greeting = `${
+        hours < 12
+          ? "Good Morning!"
+          : hours < 18
+          ? "Good Afternoon!"
+          : "Good Evening!"
+      } ${user.name}`;
+      this.$refs.tank.setGoal(user.goal);
+      this.$refs.tank.setVolume(user.volume);
+      this.volume = user.volume;
+      getTotalVolume(user.name).then((response) => {
+        this.$refs.tank.setTotalVolume(response.data.volume);
+      });
+    },
     drink() {
-      addRecord(this.username).then(() => {
-        getTotalVolume(this.username).then((response) => {
-          this.totalVolume = response.data.volume;
-          this.$refs.tank.setTotalVolume(this.totalVolume);
+      let username = localStorage.getItem("username");
+      addRecord(username).then(() => {
+        getTotalVolume(username).then((response) => {
+          this.$refs.tank.setTotalVolume(response.data.volume);
         });
       });
+    },
+    onLogout() {
+      localStorage.removeItem("username");
+      this.showStart = true;
+      this.showDrinkButton = false;
+      this.showVolume = false;
+      this.showGoal = false;
+      this.showLogout = false;
+      this.$refs.tank.setWaveHeight(30);
     },
   },
   mounted() {
@@ -137,6 +171,37 @@ export default {
   justify-content: center;
   width: 100%;
   height: 50%;
+}
+
+.logout {
+  position: fixed;
+  z-index: 999;
+  top: 16px;
+  right: 15px;
+  left: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.logout button {
+  background: none;
+  background-color: transparent;
+  border: none;
+  color: var(--color-danger);
+  font-size: 1.5rem;
+}
+
+.logout span {
+  font-weight: 900;
+}
+
+@media (max-width: 1024px) {
+  .logout {
+    width: auto;
+    justify-content: space-between;
+  }
 }
 
 .fade-enter-active,

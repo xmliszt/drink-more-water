@@ -25,6 +25,7 @@
         type="number"
         :placeholder="goalInput.placeholder"
         v-model="form.goal"
+        min="0"
         :class="[goalInput.isError && 'error']"
         @input="onGoalChange"
       />
@@ -37,6 +38,7 @@
         type="number"
         :placeholder="volumeInput.placeholder"
         v-model="form.volume"
+        min="0"
         :class="[volumeInput.isError && 'error']"
         @input="onVolumeChange"
       />
@@ -86,7 +88,7 @@ export default {
       },
       form: {
         username: "",
-        password: "",
+        password: null,
         goal: "",
         volume: "",
       },
@@ -99,7 +101,10 @@ export default {
       } else {
         this.usernameInput.isError = false;
       }
-      if (!isGuest && this.form.password.length < 6) {
+      if (
+        !isGuest &&
+        (this.form.password === null || this.form.password.length < 6)
+      ) {
         this.passwordInput.isError = true;
       } else {
         this.passwordInput.isError = false;
@@ -140,35 +145,46 @@ export default {
           this.form.volume
         )
           .then(() => {
-            this.$emit("onRegisterSuccess", this.form.username);
+            this.$emit("onRegisterSuccess", {
+              name: this.form.username,
+              goal: this.form.goal,
+              volume: this.form.volume,
+            });
           })
           .catch((reason) => {
-            if (reason.response.status === 409) {
+            if ("response" in reason && reason.response.status === 409) {
               alert("User has already been registered!");
             } else {
+              console.log(reason);
               alert("Registration failed!");
             }
           });
     },
     onGuestEnter() {
       this.validate(true);
+      let guestUsername = `guest-${this.form.username}`;
       !this.usernameInput.isError &&
         !this.goalInput.isError &&
         !this.volumeInput.isError &&
         createUserAccount(
-          `guest-${this.form.username}`,
+          guestUsername,
           this.form.password,
           this.form.goal,
           this.form.volume
         )
           .then(() => {
-            this.$emit("onRegisterSuccess", this.form.username);
+            this.$emit("onRegisterSuccess", {
+              name: guestUsername,
+              goal: this.form.goal,
+              volume: this.form.volume,
+            });
           })
           .catch((reason) => {
-            if (reason.response.status === 409) {
-              alert("Guest name already exists! Please change your name!");
+            if ("response" in reason && reason.response.status === 409) {
+              alert("Guest name is already used! Please try another name!");
             } else {
-              alert("Guest registration failed!");
+              console.log(reason);
+              alert("Registration failed!");
             }
           });
     },

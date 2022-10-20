@@ -6,7 +6,8 @@ require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
 // Create server
 const app = express();
-app.use(cors({ origin: "http://localhost:8081" }));
+// app.use(cors({ origin: "http://localhost:8081" }));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

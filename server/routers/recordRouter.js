@@ -122,7 +122,6 @@ router.get("/volume", (req, res) => {
   let username = req.query.name;
   getTotalVolumeByCurrentDay(username)
     .then((volume) => {
-      console.log(volume);
       res.send({
         success: true,
         volume,

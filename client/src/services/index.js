@@ -5,10 +5,16 @@ const base_url = import.meta.env.VITE_BASE_URL;
 const salt = bcrypt.genSaltSync(10);
 
 export async function createUserAccount(username, password, goal, volume) {
-  let hashedPwd = bcrypt.hashSync(password, salt);
+  var pwd;
+  console.log(password);
+  if (password !== undefined && password !== null && password !== "") {
+    pwd = bcrypt.hashSync(password, salt);
+  } else {
+    pwd = null;
+  }
   return axios.post(`${base_url}/user`, {
     name: username,
-    password: hashedPwd,
+    password: pwd,
     goal,
     volume,
   });
@@ -28,8 +34,8 @@ export async function loginUser(username, password) {
           rej("wrong password");
         }
       })
-      .catch(({ response }) => {
-        rej(response.data);
+      .catch((err) => {
+        rej(err);
       });
   });
 }

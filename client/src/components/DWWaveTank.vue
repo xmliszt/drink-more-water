@@ -10,12 +10,15 @@
 
 <script>
 export default {
-  props: ["showGoal", "showVolume", "volume", "goal", "totalVolume"],
+  props: ["showGoal", "showVolume"],
   data() {
     return {
       waveStyle: {
         height: 0,
       },
+      goal: 0,
+      volume: 0,
+      totalVolume: 0,
       goalAchieved: false,
     };
   },
@@ -30,11 +33,18 @@ export default {
   },
   methods: {
     setTotalVolume(volume) {
+      this.totalVolume = volume;
       let percentage = Math.floor((volume / this.goal) * 100);
       if (percentage >= 100) {
         this.goalAchieved = true;
       }
       this.waveStyle.height = `${percentage}%`;
+    },
+    setGoal(goal) {
+      this.goal = goal;
+    },
+    setVolume(volume) {
+      this.volume = volume;
     },
     setWaveHeight(percentage) {
       this.waveStyle.height = `${percentage}%`;
@@ -115,6 +125,12 @@ export default {
   }
   100% {
     transform: translateX(0vw);
+  }
+}
+
+@media (max-width: 650px) {
+  .tank h1.goal {
+    top: 48px;
   }
 }
 </style>
