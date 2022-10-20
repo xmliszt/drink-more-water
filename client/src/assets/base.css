@@ -8,7 +8,7 @@
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
-  --vt-c-indigo: #2c3e50;
+  --vt-c-indigo: #1b5085;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
@@ -33,7 +33,15 @@
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
 
-  --color-accent: rgba(29, 161, 255, 0.852);
+  --color-accent: rgba(45, 154, 232, 0.886);
+  --color-accent-secondary: rgba(82, 197, 255, 0.918);
+  --color-accent-fade: rgba(45, 154, 232, 0.4);
+
+  --color-success: #67c23a;
+  --color-warning: #e6a23c;
+  --color-info: #909399;
+  --color-danger: #f56c6c;
+  --color-primary: var(--color-accent);
 
   --section-gap: 160px;
 }

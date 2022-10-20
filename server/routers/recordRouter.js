@@ -5,13 +5,14 @@ const {
   getAllRecords,
   getRecordsByName,
   deleteRecordByID,
+  getTotalVolumeByCurrentDay,
 } = require("../services/recordService");
 const router = express.Router();
 
+// Create a new record
 router.post("/", (req, res) => {
   let name = req.body.name;
-  let change = req.body.change;
-  createRecord(name, change)
+  createRecord(name)
     .then(() => {
       res.send({
         success: true,
@@ -28,6 +29,7 @@ router.post("/", (req, res) => {
     });
 });
 
+// Get a record by ID
 router.get("/", (req, res) => {
   let _id = req.query.id;
   getRecordByID(_id)
@@ -55,6 +57,7 @@ router.get("/", (req, res) => {
     });
 });
 
+// Get all records
 router.get("/all", (req, res) => {
   let name = req.query.name;
   if (name) {
@@ -94,12 +97,34 @@ router.get("/all", (req, res) => {
   }
 });
 
+// Delete a record by ID
 router.delete("/", (req, res) => {
   let _id = req.query.id;
   deleteRecordByID(_id)
     .then(() => {
       res.send({
         success: true,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Get the sum of volumes consumed by a user in a day
+router.get("/volume", (req, res) => {
+  let username = req.query.name;
+  getTotalVolumeByCurrentDay(username)
+    .then((volume) => {
+      res.send({
+        success: true,
+        volume,
       });
     })
     .catch((err) => {
