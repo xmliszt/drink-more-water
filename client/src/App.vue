@@ -44,7 +44,7 @@ import DWButton from "@/components/DWButton.vue";
 import DWLogin from "@/components/DWLogin.vue";
 import DWRegister from "@/components/DWRegister.vue";
 import DWDrinkButton from "@/components/DWDrinkButton.vue";
-import { getTotalVolume, addRecord } from "@/services";
+import { getTotalVolume, addRecord, getUser } from "@/services";
 
 export default {
   components: { DWWaveTank, DWButton, DWRegister, DWLogin, DWDrinkButton },
