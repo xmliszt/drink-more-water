@@ -21,8 +21,8 @@ app.get("/health", (req, res) => {
 // Connect routers
 const userRouter = require("./routers/userRouter");
 const recordRouter = require("./routers/recordRouter");
-app.use("/user", userRouter);
-app.use("/record", recordRouter);
+app.use("/api/user", userRouter);
+app.use("/api/record", recordRouter);
 
 // Start listening
 const port = process.env.PORT;
