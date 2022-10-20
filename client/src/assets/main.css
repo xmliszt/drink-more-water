@@ -14,4 +14,13 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+@media (hover: hover) {
+  button:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
 }
