@@ -30,9 +30,14 @@
 <script>
 import DWButton from "@/components/DWButton.vue";
 import { loginUser, getUser } from "@/services";
+import { useToast } from "vue-toastification";
 
 export default {
   components: { DWButton },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       usernameInput: {
@@ -75,19 +80,21 @@ export default {
               })
               .catch((err) => {
                 console.log(err);
-                alert("Failed to login!");
+                this.toast.error("Failed to login!");
               });
           })
           .catch((err) => {
             if (err === "wrong password") {
-              alert("Wrong password!");
+              this.toast.error("Wrong password!");
               this.passwordInput.isError = true;
             } else if (err === "user not exist") {
-              alert("User does not exist! Please register!");
+              this.toast.error(
+                "User does not exist! Please register or enter as guest!"
+              );
               this.$emit("onOpenRegister");
             } else {
               console.log(err);
-              alert("Failed to login!");
+              this.toast.error("Failed to login!");
             }
           });
     },

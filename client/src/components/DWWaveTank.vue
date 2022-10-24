@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { addOnePoint } from "@/services";
 export default {
   props: ["showGoal", "showVolume"],
   data() {
@@ -25,6 +26,10 @@ export default {
   computed: {
     goalText() {
       if (this.goalAchieved) {
+        const username = localStorage.getItem("username");
+        if (username) {
+          addOnePoint(username);
+        }
         return "You have completed today's goal!";
       } else {
         return `Goal For Today: ${this.goal} mL`;
@@ -69,6 +74,7 @@ export default {
 .tank h1.volume {
   font-weight: 900;
   font-size: 5rem;
+  text-align: center;
 }
 
 .tank h1.goal {
@@ -78,6 +84,9 @@ export default {
   top: 16px;
   color: var(--color-accent);
   z-index: 999;
+  margin-left: 64px;
+  margin-right: 64px;
+  text-align: center;
 }
 
 .tank h1.goal.success {
@@ -87,12 +96,14 @@ export default {
 .wave {
   position: absolute;
   z-index: 1;
-  width: 200vw;
+  width: 3000px;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: var(--color-accent);
-  animation: wave 10s linear infinite;
+  animation: wave 20s;
+  animation-timing-function: cubic-bezier(0.5, 0.3, 0.5, 0.7);
+  animation-iteration-count: infinite;
   transition-property: height background-color;
   transition-duration: 0.7s;
   transition-timing-function: ease;
@@ -121,14 +132,19 @@ export default {
 
 @keyframes wave {
   0% {
-    transform: translateX(-100vw);
+    transform: translateX(-1500px) scaleY(1);
   }
+
+  50% {
+    transform: translateX(-750px) scaleY(1.5);
+  }
+
   100% {
-    transform: translateX(0vw);
+    transform: translateX(0px) scaleY(1);
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 300px) {
   .tank h1.goal {
     top: 48px;
   }

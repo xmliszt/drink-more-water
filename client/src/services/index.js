@@ -6,7 +6,6 @@ const salt = bcrypt.genSaltSync(10);
 
 export async function createUserAccount(username, password, goal, volume) {
   var pwd;
-  console.log(password);
   if (password !== undefined && password !== null && password !== "") {
     pwd = bcrypt.hashSync(password, salt);
   } else {
@@ -64,4 +63,12 @@ export async function getTotalVolume(username) {
 
 export async function addRecord(username) {
   return axios.post(`${base_url}/record`, { name: username });
+}
+
+export async function getRanks() {
+  return axios.get(`${base_url}/user/rank`);
+}
+
+export async function addOnePoint(username) {
+  return axios.put(`${base_url}/user/point/increment?name=${username}`);
 }
