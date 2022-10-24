@@ -146,6 +146,7 @@ export default {
       this.showGoal = false;
       this.showLogout = false;
       this.$refs.tank.setWaveHeight(30);
+      this.$refs.tank.$data.goalAchieved = false;
     },
   },
   mounted() {
