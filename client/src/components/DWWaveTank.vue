@@ -30,7 +30,7 @@ export default {
         if (username) {
           addOnePoint(username);
         }
-        return "You have completed today's goal!";
+        return "You have completed today's goal and earned yourself 1 point!";
       } else {
         return `Goal For Today: ${this.goal} mL`;
       }
@@ -145,6 +145,12 @@ export default {
 }
 
 @media (max-width: 300px) {
+  .tank h1.goal {
+    top: 48px;
+  }
+}
+
+@media (max-width: 650px) {
   .tank h1.goal {
     top: 48px;
   }

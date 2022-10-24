@@ -141,6 +141,50 @@ router.put("/volume", (req, res) => {
     });
 });
 
+// Update a user's goal
+router.put("/goal", (req, res) => {
+  let name = req.body.name;
+  let goal = req.body.goal;
+  changeUserGoal(name, goal)
+    .then((user) => {
+      res.send({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Update a user's volume
+router.put("/volume", (req, res) => {
+  let name = req.body.name;
+  let volume = req.body.volume;
+  changeUserVolume(name, volume)
+    .then((user) => {
+      res.send({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
 // Get all users
 router.get("/all", (req, res) => {
   getAllUsers()
