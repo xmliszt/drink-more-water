@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <tr v-for="(rank, idx) in ranks" :key="idx">
-            <td>{{ idx + 1 }}</td>
+            <td>{{ rank.rank }}</td>
             <td>{{ rank.name }}</td>
             <td>{{ rank.point }}</td>
           </tr>
@@ -59,7 +59,33 @@ export default {
     _loadRanks() {
       getRanks()
         .then((response) => {
-          this.ranks = response.data.rank;
+          let allRanks = response.data.rank;
+          var newRanks = [];
+          var _rank = 1;
+          allRanks.forEach((rank, idx) => {
+            if (idx === allRanks.length - 1) {
+              newRanks.push({
+                ...rank,
+                rank: _rank,
+              });
+            } else {
+              const thisPoint = rank.point;
+              const nextPoint = allRanks[idx + 1].point;
+              if (thisPoint !== nextPoint) {
+                newRanks.push({
+                  ...rank,
+                  rank: _rank,
+                });
+                _rank += 1;
+              } else {
+                newRanks.push({
+                  ...rank,
+                  rank: _rank,
+                });
+              }
+            }
+          });
+          this.ranks = newRanks;
         })
         .catch((err) => {
           console.log(err);
