@@ -7,7 +7,7 @@ const createUserTable = `CREATE TABLE users (
   volume integer NOT NULL,
   goal integer NOT NULL,
   point integer NOT NULL,
-  active boolean
+  last_point_updated string
 );`;
 
 const createRecordTable = `CREATE TABLE record (

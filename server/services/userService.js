@@ -1,39 +1,17 @@
 const db = require("../database/db");
+const moment = require("moment");
 
 // CREATE
 async function createUser(name, password, volume, goal) {
   return new Promise((res, rej) => {
     db.run(
-      `INSERT INTO users (name, password, volume, goal, point, active) VALUES (?,?,?,?,?,?)`,
-      [name, password, volume || 0, goal || 0, 0, false],
+      `INSERT INTO users (name, password, volume, goal, point, last_point_updated) VALUES (?,?,?,?,?,?)`,
+      [name, password, volume || 0, goal || 0, 0, null],
       (err) => {
         if (err) {
           rej(err);
         } else {
           res();
-        }
-      }
-    );
-  });
-}
-
-async function setUserActive(name, active) {
-  return new Promise((res, rej) => {
-    db.run(
-      `UPDATE users SET active = ? WHERE name = ? `,
-      [active, name],
-      (err) => {
-        if (err) {
-          rej(err);
-        } else {
-          getUserByName(name)
-            .then((user) => {
-              user.password = "******";
-              res(user);
-            })
-            .catch((err) => {
-              rej(err);
-            });
         }
       }
     );
@@ -124,9 +102,10 @@ async function changeUserVolume(name, newVolume) {
 
 async function updatePoints(name, points) {
   return new Promise((res, rej) => {
+    let updatedOn = moment().format("YYYYMMDD");
     db.run(
-      `UPDATE users SET point = ? WHERE name = ?`,
-      [points, name],
+      `UPDATE users SET point = ?, last_point_updated = ? WHERE name = ?`,
+      [points, updatedOn, name],
       (err) => {
         if (err) {
           rej(err);
@@ -159,7 +138,6 @@ async function getRanks() {
 
 module.exports = {
   createUser,
-  setUserActive,
   getUserByName,
   deleteUserByName,
   getAllUsers,

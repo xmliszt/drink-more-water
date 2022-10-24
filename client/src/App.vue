@@ -27,12 +27,17 @@
       </div>
     </Transition>
     <Transition name="fade">
-      <div v-show="showLogout" class="logout">
-        <span>{{ greeting }}</span>
-        <button @click="onLogout">
-          <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
+      <div v-show="showActions" class="actions">
+        <button class="rank" @click="onOpenRank">
+          <font-awesome-icon icon="fa-solid fa-ranking-star" />
+        </button>
+        <button class="logout" @click="onLogout">
+          <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
         </button>
       </div>
+    </Transition>
+    <Transition name="fade">
+      <DWRank ref="rank" v-show="showRank" @onRankClosed="onCloseRank" />
     </Transition>
     <DWWaveTank ref="tank" :showVolume="showVolume" :showGoal="showGoal" />
   </main>
@@ -44,10 +49,23 @@ import DWButton from "@/components/DWButton.vue";
 import DWLogin from "@/components/DWLogin.vue";
 import DWRegister from "@/components/DWRegister.vue";
 import DWDrinkButton from "@/components/DWDrinkButton.vue";
+import DWRank from "@/components/DWRank.vue";
 import { getTotalVolume, addRecord, getUser } from "@/services";
+import { useToast } from "vue-toastification";
 
 export default {
-  components: { DWWaveTank, DWButton, DWRegister, DWLogin, DWDrinkButton },
+  components: {
+    DWWaveTank,
+    DWButton,
+    DWRegister,
+    DWLogin,
+    DWDrinkButton,
+    DWRank,
+  },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       volume: 0,
@@ -57,7 +75,8 @@ export default {
       showLogin: false,
       showRegister: false,
       showDrinkButton: false,
-      showLogout: false,
+      showActions: false,
+      showRank: false,
       greeting: "",
     };
   },
@@ -112,7 +131,7 @@ export default {
       this.showGoal = true;
       this.showVolume = true;
       this.showDrinkButton = true;
-      this.showLogout = true;
+      this.showActions = true;
 
       var ndate = new Date();
       var hours = ndate.getHours();
@@ -123,6 +142,7 @@ export default {
           ? "Good Afternoon!"
           : "Good Evening!"
       } ${user.name}`;
+      this.toast.success(this.greeting);
       this.$refs.tank.setGoal(user.goal);
       this.$refs.tank.setVolume(user.volume);
       this.volume = user.volume;
@@ -144,9 +164,16 @@ export default {
       this.showDrinkButton = false;
       this.showVolume = false;
       this.showGoal = false;
-      this.showLogout = false;
+      this.showActions = false;
       this.$refs.tank.setWaveHeight(30);
       this.$refs.tank.$data.goalAchieved = false;
+    },
+    onOpenRank() {
+      this.showRank = true;
+      this.$refs.rank.fetchRanks();
+    },
+    onCloseRank() {
+      this.showRank = false;
     },
   },
   mounted() {
@@ -173,35 +200,37 @@ export default {
   height: 50%;
 }
 
-.logout {
+.actions {
   position: fixed;
   z-index: 999;
   top: 16px;
-  right: 15px;
-  left: 15px;
+  right: 10px;
+  left: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
 }
 
-.logout button {
+.actions button {
   background: none;
   background-color: transparent;
   border: none;
+  font-size: 2em;
+}
+
+.actions button.logout {
   color: var(--color-danger);
-  font-size: 1.5rem;
 }
 
-.logout span {
-  font-weight: 900;
+.actions button.rank {
+  color: var(--color-warning);
 }
 
-@media (max-width: 1024px) {
-  .logout {
-    width: auto;
-    justify-content: space-between;
-  }
+.actions button svg path {
+  stroke: var(--color-background-soft);
+  stroke-width: 35px;
+  stroke-linejoin: round;
 }
 
 .fade-enter-active,

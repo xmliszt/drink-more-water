@@ -1,9 +1,9 @@
 const express = require("express");
+const moment = require("moment");
 const {
   createUser,
   getUserByName,
   deleteUserByName,
-  setUserActive,
   getAllUsers,
   changeUserGoal,
   changeUserVolume,
@@ -97,11 +97,33 @@ router.delete("/", (req, res) => {
     });
 });
 
-// Update a user's activeness status
-router.put("/active", (req, res) => {
+// Update a user's goal
+router.put("/goal", (req, res) => {
   let name = req.body.name;
-  let active = req.body.active;
-  setUserActive(name, active)
+  let goal = req.body.goal;
+  changeUserGoal(name, goal)
+    .then((user) => {
+      res.send({
+        success: true,
+        user,
+      });
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Update a user's volume
+router.put("/volume", (req, res) => {
+  let name = req.body.name;
+  let volume = req.body.volume;
+  changeUserVolume(name, volume)
     .then((user) => {
       res.send({
         success: true,
@@ -197,6 +219,54 @@ router.put("/point", (req, res) => {
     .catch((err) => {
       res.status(501).json({
         success: false,
+        error: {
+          ...err,
+          message: err.message,
+        },
+      });
+    });
+});
+
+// Increase the point of the user by 1
+router.put("/point/increment", (req, res) => {
+  let name = req.query.name;
+  getUserByName(name)
+    .then((user) => {
+      const pointLastUpdatedOn = user.last_point_updated;
+      const now = Number(moment().format("YYYYMMDD"));
+      if (pointLastUpdatedOn === now) {
+        // Already updated
+        res.status(200).send({
+          success: true,
+          changed: false,
+          error: "Point has already been updated for today",
+        });
+      } else {
+        const points = user.point + 1;
+        updatePoints(name, points)
+          .then((user) => {
+            res.send({
+              success: true,
+              changed: true,
+              user,
+            });
+          })
+          .catch((err) => {
+            res.status(501).json({
+              success: false,
+              changed: false,
+              error: {
+                ...err,
+                message: err.message,
+              },
+            });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(501).json({
+        success: false,
+        changed: false,
         error: {
           ...err,
           message: err.message,

@@ -61,9 +61,14 @@
 <script>
 import DWButton from "@/components/DWButton.vue";
 import { createUserAccount } from "@/services";
+import { useToast } from "vue-toastification";
 
 export default {
   components: { DWButton },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       usernameInput: {
@@ -132,8 +137,20 @@ export default {
         this.goalInput.isError = false;
       }
     },
+    showToastAfterValidation() {
+      if (this.usernameInput.isError) {
+        this.toast.error("Invalid username!");
+      } else if (this.passwordInput.isError) {
+        this.toast.error("Password needs to be at least 6 characters!");
+      } else if (this.goalInput.isError) {
+        this.toast.error("Goal should only be positive integer value!");
+      } else if (this.volumeInput.isError) {
+        this.toast.error("Capacity should only be positive integer value!");
+      }
+    },
     onRegister() {
       this.validate(false);
+      this.showToastAfterValidation();
       !this.usernameInput.isError &&
         !this.passwordInput.isError &&
         !this.goalInput.isError &&
@@ -153,10 +170,10 @@ export default {
           })
           .catch((reason) => {
             if ("response" in reason && reason.response.status === 409) {
-              alert("User has already been registered!");
+              this.toast.warning("User has already been registered!");
             } else {
               console.log(reason);
-              alert("Registration failed!");
+              this.toast.error("Registration failed!");
             }
           });
     },
@@ -181,10 +198,12 @@ export default {
           })
           .catch((reason) => {
             if ("response" in reason && reason.response.status === 409) {
-              alert("Guest name is already used! Please try another name!");
+              this.toast.warning(
+                "Guest name is already used! Please try another name!"
+              );
             } else {
               console.log(reason);
-              alert("Registration failed!");
+              this.toast.error("Registration failed!");
             }
           });
     },
