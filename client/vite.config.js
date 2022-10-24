@@ -9,17 +9,17 @@ export default defineConfig(({ mode }) => {
   if (mode === "development") {
     server = {
       host: "localhost",
-      port: 8081,
+      port: 8080,
     };
   } else if (mode === "staging") {
     server = {
-      host: "0.0.0.0",
-      port: 8081,
+      host: true,
+      port: 8080,
     };
   } else if (mode === "production") {
     server = {
       host: true,
-      port: 8081,
+      port: 8080,
     };
   }
   return {
