@@ -1,3 +1,5 @@
 #!/bin/bash
 
-docker run -it -dp 8080:80 --rm --name drink-water-server sutd-devtools/drink-water-server
+docker stop drink-water-server
+docker build -t sutd-devtools/drink-water-server .
+docker run -it -dp 3000:3000 --rm --name drink-water-server sutd-devtools/drink-water-server
