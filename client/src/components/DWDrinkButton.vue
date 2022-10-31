@@ -32,7 +32,6 @@ button.drink {
 button.drink span {
   font-size: 20px;
   font-weight: 900;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: absolute;
   z-index: 1;
   color: var(--color-text);

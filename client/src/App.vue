@@ -245,6 +245,12 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "Oswald";
+  src: local("Oswald"),
+    url(./assets/fonts/Oswald/Oswald-Bold.ttf) format("truetype");
+}
+
 .start {
   width: 80vw;
   height: 80vh;
