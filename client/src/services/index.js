@@ -1,13 +1,11 @@
 import axios from "axios";
-import bcrypt from "bcryptjs";
-
+import { compareHash, hash } from "../utils";
 const base_url = import.meta.env.VITE_BASE_URL;
-const salt = bcrypt.genSaltSync(10);
 
 export async function createUserAccount(username, password, goal, volume) {
   var pwd;
   if (password !== undefined && password !== null && password !== "") {
-    pwd = bcrypt.hashSync(password, salt);
+    pwd = hash(password);
   } else {
     pwd = null;
   }
@@ -25,7 +23,7 @@ export async function loginUser(username, password) {
       .get(`${base_url}/user?name=${username}`)
       .then((response) => {
         let user = response.data;
-        if (user !== "" && bcrypt.compareSync(password, user.password)) {
+        if (user !== "" && compareHash(password, user.password)) {
           res();
         } else if (user === "") {
           rej("user not exist");
@@ -53,7 +51,7 @@ export async function updateUserVolume(username, volume) {
   });
 }
 
-export async function getUser(username) {
+export async function fetchUser(username) {
   return axios.get(`${base_url}/user?name=${username}`);
 }
 

@@ -10,6 +10,8 @@
 
 <script>
 import { addOnePoint } from "@/services";
+import { getUser } from "../utils";
+
 export default {
   props: ["showGoal", "showVolume"],
   data() {
@@ -26,11 +28,14 @@ export default {
   computed: {
     goalText() {
       if (this.goalAchieved) {
-        const username = localStorage.getItem("username");
-        if (username) {
+        const user = getUser();
+        if (user) {
+          const username = user.name;
           addOnePoint(username);
+          return "You have completed today's goal and earned yourself 1 point!";
+        } else {
+          return "";
         }
-        return "You have completed today's goal and earned yourself 1 point!";
       } else {
         return `Goal For Today: ${this.goal} mL`;
       }
@@ -42,6 +47,8 @@ export default {
       let percentage = Math.floor((volume / this.goal) * 100);
       if (percentage >= 100) {
         this.goalAchieved = true;
+      } else {
+        this.goalAchieved = false;
       }
       this.waveStyle.height = `${percentage}%`;
     },
@@ -73,16 +80,16 @@ export default {
 
 .tank h1.volume {
   font-weight: 900;
-  font-size: 5rem;
+  font-size: calc(min(15vw, 5rem));
   text-align: center;
 }
 
 .tank h1.goal {
   font-weight: 900;
-  font-size: 1rem;
+  font-size: calc(min(8vw, 3rem));
   position: fixed;
-  top: 16px;
-  color: var(--color-accent);
+  top: 64px;
+  color: rgba(0, 0, 0, 0.2);
   z-index: 999;
   margin-left: 64px;
   margin-right: 64px;
@@ -91,18 +98,19 @@ export default {
 
 .tank h1.goal.success {
   color: var(--color-background-soft);
+  font-size: 1.5rem;
 }
 
 .wave {
   position: absolute;
   z-index: 1;
-  width: 3000px;
+  width: 200vw;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: var(--color-accent);
-  animation: wave 20s;
-  animation-timing-function: cubic-bezier(0.5, 0.3, 0.5, 0.7);
+  animation: wave 5s;
+  animation-timing-function: linear;
   animation-iteration-count: infinite;
   transition-property: height background-color;
   transition-duration: 0.7s;
@@ -118,39 +126,29 @@ export default {
   content: "";
   position: absolute;
   left: 0;
-  top: -30px;
+  top: calc(-100vw / 12);
   right: 0;
   background-repeat: repeat;
-  height: 30px;
-  background-size: 30px 30px;
+  height: calc(100vw / 12);
+  background-size: calc(100vw / 12) calc(100vw / 12);
   background-image: radial-gradient(
-    circle at 15px -5px,
-    transparent 29px,
-    var(--color-accent) 30px
+    circle at calc(100vw / 24) calc(-100vw / 24),
+    transparent calc(100vw / 10),
+    var(--color-accent) calc(100vw / 12)
   );
 }
 
 @keyframes wave {
   0% {
-    transform: translateX(-1500px) scaleY(1);
-  }
-
-  50% {
-    transform: translateX(-750px) scaleY(1.5);
+    transform: translateX(-100vw);
   }
 
   100% {
-    transform: translateX(0px) scaleY(1);
+    transform: translateX(0px);
   }
 }
 
 @media (max-width: 300px) {
-  .tank h1.goal {
-    top: 48px;
-  }
-}
-
-@media (max-width: 650px) {
   .tank h1.goal {
     top: 48px;
   }

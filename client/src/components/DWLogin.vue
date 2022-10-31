@@ -29,7 +29,7 @@
 
 <script>
 import DWButton from "@/components/DWButton.vue";
-import { loginUser, getUser } from "@/services";
+import { loginUser, fetchUser } from "@/services";
 import { useToast } from "vue-toastification";
 
 export default {
@@ -70,7 +70,7 @@ export default {
         !this.passwordInput.isError &&
         loginUser(this.form.username, this.form.password)
           .then(() => {
-            getUser(this.form.username)
+            fetchUser(this.form.username)
               .then((response) => {
                 this.$emit("onLoginSuccess", {
                   name: response.data.name,
@@ -118,6 +118,7 @@ export default {
 <style>
 .login-card {
   width: 100%;
+  height: 100%;
   z-index: 999;
   border-radius: 20px;
   background-color: white;
@@ -129,6 +130,12 @@ export default {
   flex-wrap: wrap;
   gap: 10px;
   padding: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.login-card::-webkit-scrollbar {
+  display: none;
 }
 
 .login-card p {

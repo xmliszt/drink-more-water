@@ -121,6 +121,12 @@ export default {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dw-rank div.container::-webkit-scrollbar {
+  display: none;
 }
 
 .dw-rank div.title {

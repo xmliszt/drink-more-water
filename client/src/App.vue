@@ -28,9 +28,14 @@
     </Transition>
     <Transition name="fade">
       <div v-show="showActions" class="actions">
-        <button class="rank" @click="onOpenRank">
-          <font-awesome-icon icon="fa-solid fa-ranking-star" />
-        </button>
+        <div class="left-bar">
+          <button class="rank" @click="onOpenRank">
+            <font-awesome-icon icon="fa-solid fa-ranking-star" />
+          </button>
+          <button class="setting" @click="onOpenSetting">
+            <font-awesome-icon icon="fa-solid fa-gear" />
+          </button>
+        </div>
         <button class="logout" @click="onLogout">
           <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
         </button>
@@ -39,7 +44,21 @@
     <Transition name="fade">
       <DWRank ref="rank" v-show="showRank" @onRankClosed="onCloseRank" />
     </Transition>
-    <DWWaveTank ref="tank" :showVolume="showVolume" :showGoal="showGoal" />
+    <Transition name="fade">
+      <DWSetting
+        ref="setting"
+        v-show="showSetting"
+        @onSettingClosed="onCloseSetting"
+        @onLoginFailed="onLoginFailed"
+        @onUpdateSuccess="onUpdateSuccess"
+      />
+    </Transition>
+    <DWWaveTank
+      ref="tank"
+      :showVolume="showVolume"
+      :showGoal="showGoal"
+      @onLoginFailed="onLoginFailed"
+    />
   </main>
 </template>
 
@@ -50,7 +69,9 @@ import DWLogin from "@/components/DWLogin.vue";
 import DWRegister from "@/components/DWRegister.vue";
 import DWDrinkButton from "@/components/DWDrinkButton.vue";
 import DWRank from "@/components/DWRank.vue";
-import { getTotalVolume, addRecord, getUser } from "@/services";
+import DWSetting from "@/components/DWSetting.vue";
+import { getTotalVolume, addRecord, fetchUser } from "@/services";
+import { clearUser, getUser, setUser } from "./utils";
 import { useToast } from "vue-toastification";
 
 export default {
@@ -61,6 +82,7 @@ export default {
     DWLogin,
     DWDrinkButton,
     DWRank,
+    DWSetting,
   },
   setup() {
     const toast = useToast();
@@ -77,6 +99,7 @@ export default {
       showDrinkButton: false,
       showActions: false,
       showRank: false,
+      showSetting: false,
       greeting: "",
     };
   },
@@ -84,26 +107,31 @@ export default {
     kickstart() {
       this.showStart = false;
       this.$refs.tank.setWaveHeight(100);
-      let username = localStorage.getItem("username");
-      if (username) {
-        getUser(username)
+      const user = getUser();
+      if (user) {
+        let username = user.name;
+        fetchUser(username)
           .then((response) => {
             let user = response.data;
             this.startWithUser(user);
           })
           .catch((err) => {
             console.log(err);
-            setTimeout(() => {
-              this.showRegister = true;
-              this.showLogin = false;
-            }, 1000);
+            this.onAuthFailed();
           });
       } else {
-        setTimeout(() => {
-          this.showRegister = true;
-          this.showLogin = false;
-        }, 1000);
+        this.showRegistration();
       }
+    },
+    onAuthFailed() {
+      this.toast.error("Please login!");
+      this.showRegistration();
+    },
+    showRegistration() {
+      setTimeout(() => {
+        this.showRegister = true;
+        this.showLogin = false;
+      }, 1000);
     },
     onRegisterSuccess(user) {
       this.showRegister = false;
@@ -126,7 +154,7 @@ export default {
       }, 1000);
     },
     startWithUser(user) {
-      localStorage.setItem("username", user.name);
+      setUser(user);
       this.showLogin = false;
       this.showGoal = true;
       this.showVolume = true;
@@ -151,20 +179,26 @@ export default {
       });
     },
     drink() {
-      let username = localStorage.getItem("username");
-      addRecord(username).then(() => {
-        getTotalVolume(username).then((response) => {
-          this.$refs.tank.setTotalVolume(response.data.volume);
+      const user = getUser();
+      if (user) {
+        let username = user.name;
+        addRecord(username).then(() => {
+          getTotalVolume(username).then((response) => {
+            this.$refs.tank.setTotalVolume(response.data.volume);
+          });
         });
-      });
+      } else {
+        this.onAuthFailed();
+      }
     },
     onLogout() {
-      localStorage.removeItem("username");
+      clearUser();
       this.showStart = true;
       this.showDrinkButton = false;
       this.showVolume = false;
       this.showGoal = false;
       this.showActions = false;
+      this.showSetting = false;
       this.$refs.tank.setWaveHeight(30);
       this.$refs.tank.$data.goalAchieved = false;
     },
@@ -175,9 +209,37 @@ export default {
     onCloseRank() {
       this.showRank = false;
     },
+    onOpenSetting() {
+      const user = getUser();
+      if (user) {
+        this.$refs.setting.setCurrent(user);
+        this.showSetting = true;
+      } else {
+        this.onAuthFailed();
+      }
+    },
+    onCloseSetting() {
+      this.showSetting = false;
+    },
+    onLoginFailed() {
+      this.toast.error("Please login!");
+      this.onLogout();
+    },
+    onUpdateSuccess(user) {
+      this.$refs.tank.setGoal(user.goal);
+      this.$refs.tank.setVolume(user.volume);
+      this.volume = user.volume;
+      getTotalVolume(user.name).then((response) => {
+        this.$refs.tank.setTotalVolume(response.data.volume);
+      });
+    },
   },
   mounted() {
     this.$refs.tank.setWaveHeight(30);
+    const user = getUser();
+    if (!user) {
+      this.onLogout();
+    }
   },
 };
 </script>
@@ -212,6 +274,14 @@ export default {
   gap: 12px;
 }
 
+.actions div.left-bar {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .actions button {
   background: none;
   background-color: transparent;
@@ -225,6 +295,10 @@ export default {
 
 .actions button.rank {
   color: var(--color-warning);
+}
+
+.actions button.setting {
+  color: var(--color-info);
 }
 
 .actions button svg path {

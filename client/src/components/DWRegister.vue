@@ -237,7 +237,9 @@ export default {
 <style>
 .register-card {
   width: 100%;
+  height: 100%;
   z-index: 999;
+  overflow-y: scroll;
   border-radius: 20px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.7) 0px 0px 10px 0px;
@@ -245,9 +247,15 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 10px;
   padding: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.register-card::-webkit-scrollbar {
+  display: none;
 }
 
 .register-card p {
