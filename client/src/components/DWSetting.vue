@@ -101,12 +101,12 @@ export default {
         this.goalInput.isError = true;
         return;
       }
-      if (this.form.volume <= 0) {
+      if (this.form.volume <= 0 || !Number.isInteger(this.form.volume)) {
         this.volumeInput.isError = true;
       } else {
         this.volumeInput.isError = false;
       }
-      if (this.form.goal <= 0) {
+      if (this.form.goal <= 0 || !Number.isInteger(this.form.goal)) {
         this.goalInput.isError = true;
       } else {
         this.goalInput.isError = false;

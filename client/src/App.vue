@@ -252,8 +252,8 @@ export default {
 }
 
 .start {
-  width: 80vw;
-  height: 80vh;
+  width: 85vw;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -272,8 +272,8 @@ export default {
   position: fixed;
   z-index: 999;
   top: 16px;
-  right: 10px;
-  left: 10px;
+  right: 16px;
+  left: 16px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -282,13 +282,15 @@ export default {
 
 .actions div.left-bar {
   display: flex;
-  gap: 16px;
+  gap: 24px;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
 }
 
 .actions button {
+  margin: 0;
+  padding: 0;
   background: none;
   background-color: transparent;
   border: none;
@@ -311,6 +313,11 @@ export default {
   stroke: var(--color-background-soft);
   stroke-width: 35px;
   stroke-linejoin: round;
+}
+
+.actions button svg {
+  -webkit-filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
 }
 
 .fade-enter-active,

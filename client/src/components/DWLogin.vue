@@ -142,7 +142,8 @@ export default {
   font-weight: 900;
   font-size: 1rem;
   color: var(--color-text);
-  text-align: center;
+  text-align: left;
+  width: 100%;
 }
 
 .login-card input {

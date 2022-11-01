@@ -79,20 +79,19 @@ export default {
 }
 
 .tank h1.volume {
-  font-weight: 900;
   font-size: calc(min(15vw, 5rem));
   text-align: center;
 }
 
 .tank h1.goal {
-  font-weight: 900;
   font-size: calc(min(8vw, 3rem));
   position: fixed;
-  top: 64px;
-  color: rgba(0, 0, 0, 0.2);
+  top: 15%;
+  color: rgba(98, 98, 98, 0.3);
   z-index: 999;
-  margin-left: 64px;
-  margin-right: 64px;
+  width: 100%;
+  margin-left: 16px;
+  margin-right: 16px;
   text-align: center;
 }
 

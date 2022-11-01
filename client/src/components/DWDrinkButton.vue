@@ -27,6 +27,7 @@ button.drink {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.2s ease;
 }
 
 button.drink span {
@@ -40,7 +41,6 @@ button.drink span {
 @media (hover: hover) {
   button.drink:hover {
     transform: scale(1.1);
-    transition: transform 0.2s ease;
   }
 }
 
