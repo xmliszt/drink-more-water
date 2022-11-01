@@ -129,11 +129,15 @@ sudo snap install --classic certbot
 
 ### Setup project
 
-Once you have all the pre-requisites, we can spin up the container using the `setup.sh` script at root.
+Once you have all the pre-requisites, we can spin up the container using the `setup.sh` script found at root.
+
+> You should bring this script out of the root folder and run, as it will clone a copy of this project.
 
 ```
 sudo ./setup.sh
 ```
+
+The script will clone the project into `sutdacademy-drink-water` folder with the source codes within.
 
 After this, you should have two Docker containers running. One is the **client frontend**, the other is the **server backend**. To view the running containers:
 
