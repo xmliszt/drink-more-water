@@ -1,5 +1,11 @@
 # Drink Water 😊💦
 
+<img width="100%" src="https://media.giphy.com/media/guKp5Wjf2N2Lu/giphy.gif" />
+
+<a href="https://yuxuan.sutdacademytools.net">Start Drink Water Today!</a></p>
+
+---
+
 - [Drink Water 😊💦](#drink-water-)
   - [Overview](#overview)
     - [Frontend](#frontend)
