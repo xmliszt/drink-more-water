@@ -127,7 +127,8 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-y: scroll;
   gap: 10px;
   padding: 20px;
   scrollbar-width: none;
