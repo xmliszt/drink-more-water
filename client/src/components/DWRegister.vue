@@ -237,14 +237,9 @@ export default {
         this.goalInput.isError = false;
       }
     },
-    async generateRandomUsername() {
-      try {
-        const name = await generateName();
-        this.form.username = name;
-      } catch (err) {
-        console.log(err);
-        this.toast.error("Unable to generate names. Try again later!");
-      }
+    generateRandomUsername() {
+      const name = generateName();
+      this.form.username = name;
     },
   },
 };
