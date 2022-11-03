@@ -6,9 +6,6 @@ function pickRandom(list) {
 }
 
 export function generateName() {
-  const name = pickRandom([
-    ...maleNames,
-    ...femaleNames,
-  ]).capitalizeFirstLetter();
+  const name = pickRandom([...maleNames, ...femaleNames]);
   return `${name}`;
 }
