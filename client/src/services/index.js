@@ -70,3 +70,7 @@ export async function getRanks() {
 export async function addOnePoint(username) {
   return axios.put(`${base_url}/user/point/increment?name=${username}`);
 }
+
+export async function deleteUser(username) {
+  return axios.delete(`${base_url}/user?name=${username}`);
+}
