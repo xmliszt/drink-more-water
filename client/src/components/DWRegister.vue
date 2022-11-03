@@ -1,14 +1,19 @@
 <template>
   <div class="register-card">
     <p>{{ usernameInput.prompt }}</p>
-    <input
-      id="username"
-      type="text"
-      :placeholder="usernameInput.placeholder"
-      v-model="form.username"
-      :class="[usernameInput.isError && 'error']"
-      @input="onUsernameChange"
-    />
+    <div class="username-input">
+      <input
+        id="username"
+        type="text"
+        :placeholder="usernameInput.placeholder"
+        v-model="form.username"
+        :class="[usernameInput.isError && 'error']"
+        @input="onUsernameChange"
+      />
+      <button class="random" @click="generateRandomUsername">
+        <font-awesome-icon icon="fa-solid fa-dice" />
+      </button>
+    </div>
     <p>{{ passwordInput.prompt }}</p>
     <input
       id="password"
@@ -62,6 +67,7 @@
 import DWButton from "@/components/DWButton.vue";
 import { createUserAccount } from "@/services";
 import { useToast } from "vue-toastification";
+import { generateName } from "@/services/RandomName";
 
 export default {
   components: { DWButton },
@@ -94,8 +100,8 @@ export default {
       form: {
         username: "",
         password: null,
-        goal: "",
-        volume: "",
+        goal: 2000,
+        volume: 550,
       },
     };
   },
@@ -179,6 +185,7 @@ export default {
     },
     onGuestEnter() {
       this.validate(true);
+      this.showToastAfterValidation();
       let guestUsername = `guest-${this.form.username}`;
       !this.usernameInput.isError &&
         !this.goalInput.isError &&
@@ -228,6 +235,15 @@ export default {
     onGoalChange({ target }) {
       if (target.value.length > 0) {
         this.goalInput.isError = false;
+      }
+    },
+    async generateRandomUsername() {
+      try {
+        const name = await generateName();
+        this.form.username = name;
+      } catch (err) {
+        console.log(err);
+        this.toast.error("Unable to generate names. Try again later!");
       }
     },
   },
@@ -292,6 +308,7 @@ export default {
   outline: none;
 }
 
+.register-card > div.username-input,
 .register-card > div.volume-input,
 .register-card > div.goal-input {
   width: 100%;
@@ -308,18 +325,23 @@ export default {
   gap: 20px;
 }
 
-.register-card div label {
+.register-card div label,
+.register-card div button.random {
   color: var(--color-background);
   border: 3px solid var(--color-text);
   border-radius: 10px;
   width: 40px;
   height: 40px;
   text-align: center;
-  font-weight: 900;
+  font-size: large;
   padding-top: 3px;
   padding-left: 3px;
   padding-right: 3px;
   box-shadow: var(--color-accent) 0px 3px 0px 0px;
   background-color: var(--color-text);
+}
+
+button.random:active {
+  transform: scale(0.9);
 }
 </style>

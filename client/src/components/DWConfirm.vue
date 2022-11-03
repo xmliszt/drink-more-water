@@ -9,11 +9,11 @@
         <div class="body">
           <p>{{ config.body }}</p>
           <div class="buttons">
-            <DWButton type="info" @click="onCancel">{{
-              config.cancelText
+            <DWButton type="info" size="large" @click="onCancel">{{
+              config.cancelText.toUpperCase()
             }}</DWButton>
-            <DWButton type="success" @click="onConfirm">{{
-              config.confirmText
+            <DWButton type="danger" size="large" @click="onConfirm">{{
+              config.confirmText.toUpperCase()
             }}</DWButton>
           </div>
         </div>
@@ -70,6 +70,10 @@ export default {
   -webkit-backdrop-filter: blur(3px);
 }
 
+.dw-confirm div.container::-webkit-scrollbar {
+  display: none;
+}
+
 .dw-confirm div.container {
   width: 80vw;
   height: 80vh;
@@ -79,13 +83,13 @@ export default {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   gap: 20px;
   padding: 20px;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 div.container div.header {
@@ -100,6 +104,7 @@ div.container div.divider {
 }
 
 div.container div.body {
+  width: 100%;
   display: flex;
   gap: 20px;
   flex-direction: column;
@@ -108,13 +113,14 @@ div.container div.body {
 
 div.body p {
   text-align: center;
+  font-size: max(2vw, 18px);
 }
 
 div.body div.buttons {
   display: flex;
   gap: 20px;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: stretch;
   align-items: stretch;
 }
 

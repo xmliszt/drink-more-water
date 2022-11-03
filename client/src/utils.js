@@ -25,3 +25,7 @@ export const getUser = () => {
 export const clearUser = () => {
   localStorage.removeItem("user");
 };
+
+String.prototype.capitalizeFirstLetter = () => {
+  return this.replace(/^./, this[0].toUpperCase());
+};

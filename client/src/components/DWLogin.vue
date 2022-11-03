@@ -64,6 +64,11 @@ export default {
         this.usernameInput.isError = false;
       }
     },
+    showToastAfterValidation() {
+      if (this.usernameInput.isError) {
+        this.toast.error("Invalid username!");
+      }
+    },
     onLogin() {
       this.validate();
       !this.usernameInput.isError &&

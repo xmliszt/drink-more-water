@@ -117,7 +117,11 @@ export default {
         fetchUser(username)
           .then((response) => {
             let user = response.data;
-            this.startWithUser(user);
+            if (typeof user === Object) {
+              this.startWithUser(user);
+            } else {
+              this.onAuthFailed();
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -251,7 +255,7 @@ export default {
               .then(() => {
                 this.toast.success("Account deleted successfully!");
                 this.$refs.confirm.$data.isShown = false;
-                this.showRegistration();
+                this.onLogout();
               })
               .catch((err) => {
                 console.log(err);
@@ -261,7 +265,7 @@ export default {
           } else {
             this.toast.error("No user found!");
             this.$refs.confirm.$data.isShown = false;
-            this.showRegistration();
+            this.onLogout();
           }
         },
         () => {

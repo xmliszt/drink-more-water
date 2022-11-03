@@ -14,7 +14,7 @@ const createRecordTable = `CREATE TABLE record (
   id integer UNIQUE PRIMARY KEY AUTOINCREMENT NOT NULL,
   username string NOT NULL,
   created_on string NOT NULL,
-  FOREIGN KEY (username) REFERENCES users (name)
+  FOREIGN KEY (username) REFERENCES users (name) ON DELETE CASCADE
 );
 `;
 
