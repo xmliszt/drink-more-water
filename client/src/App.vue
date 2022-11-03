@@ -133,6 +133,7 @@ export default {
     },
     onAuthFailed() {
       this.toast.error("Please login!");
+      clearUser();
       this.showRegistration();
     },
     showRegistration() {
