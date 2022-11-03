@@ -61,6 +61,7 @@
       @onLoginFailed="onLoginFailed"
     />
     <DWConfirm ref="confirm" />
+    <DWFooter />
   </main>
 </template>
 
@@ -73,6 +74,7 @@ import DWDrinkButton from "@/components/DWDrinkButton.vue";
 import DWRank from "@/components/DWRank.vue";
 import DWSetting from "@/components/DWSetting.vue";
 import DWConfirm from "@/components/DWConfirm.vue";
+import DWFooter from "@/components/DWFooter.vue";
 import { getTotalVolume, addRecord, fetchUser, deleteUser } from "@/services";
 import { clearUser, getUser, setUser } from "./utils";
 import { useToast } from "vue-toastification";
@@ -87,6 +89,7 @@ export default {
     DWRank,
     DWSetting,
     DWConfirm,
+    DWFooter,
   },
   setup() {
     const toast = useToast();

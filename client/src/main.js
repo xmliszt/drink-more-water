@@ -8,12 +8,18 @@ import {
   faXmark,
   faGear,
   faDice,
+  faCopyright,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 import "./assets/main.css";
+import {
+  faGithub,
+  faNodeJs,
+  faVuejs,
+} from "@fortawesome/free-brands-svg-icons";
 
 library.add(
   faGlassWater,
@@ -21,7 +27,11 @@ library.add(
   faRankingStar,
   faXmark,
   faGear,
-  faDice
+  faDice,
+  faCopyright,
+  faGithub,
+  faVuejs,
+  faNodeJs
 );
 
 const appHeight = () => {
