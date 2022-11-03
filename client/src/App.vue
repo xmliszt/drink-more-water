@@ -51,6 +51,7 @@
         @onSettingClosed="onCloseSetting"
         @onLoginFailed="onLoginFailed"
         @onUpdateSuccess="onUpdateSuccess"
+        @onConfirmDeletion="onConfirmDeletion"
       />
     </Transition>
     <DWWaveTank
@@ -59,6 +60,7 @@
       :showGoal="showGoal"
       @onLoginFailed="onLoginFailed"
     />
+    <DWConfirm ref="confirm" />
   </main>
 </template>
 
@@ -70,7 +72,8 @@ import DWRegister from "@/components/DWRegister.vue";
 import DWDrinkButton from "@/components/DWDrinkButton.vue";
 import DWRank from "@/components/DWRank.vue";
 import DWSetting from "@/components/DWSetting.vue";
-import { getTotalVolume, addRecord, fetchUser } from "@/services";
+import DWConfirm from "@/components/DWConfirm.vue";
+import { getTotalVolume, addRecord, fetchUser, deleteUser } from "@/services";
 import { clearUser, getUser, setUser } from "./utils";
 import { useToast } from "vue-toastification";
 
@@ -83,6 +86,7 @@ export default {
     DWDrinkButton,
     DWRank,
     DWSetting,
+    DWConfirm,
   },
   setup() {
     const toast = useToast();
@@ -232,6 +236,38 @@ export default {
       getTotalVolume(user.name).then((response) => {
         this.$refs.tank.setTotalVolume(response.data.volume);
       });
+    },
+    onConfirmDeletion() {
+      this.$refs.confirm.show(
+        {
+          title: "Are you sure to delete your account?",
+          body: "Your account will be deleted permanently and you will be logged out.",
+          confirmText: "proceed",
+        },
+        () => {
+          const user = getUser();
+          if (user) {
+            deleteUser(user.name)
+              .then(() => {
+                this.toast.success("Account deleted successfully!");
+                this.$refs.confirm.$data.isShown = false;
+                this.showRegistration();
+              })
+              .catch((err) => {
+                console.log(err);
+                this.toast.error("Failed to delete account!");
+                this.$refs.confirm.$data.isShown = false;
+              });
+          } else {
+            this.toast.error("No user found!");
+            this.$refs.confirm.$data.isShown = false;
+            this.showRegistration();
+          }
+        },
+        () => {
+          this.$refs.confirm.$data.isShown = false;
+        }
+      );
     },
   },
   mounted() {

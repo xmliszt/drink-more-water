@@ -34,7 +34,7 @@ button.medium {
   height: 44px;
   border-radius: 22px;
   border-width: 4px;
-  font-size: 20px;
+  font-size: 1.4rem;
 }
 
 button.large {
@@ -42,7 +42,7 @@ button.large {
   height: 68px;
   border-radius: 34px;
   border-width: 8px;
-  font-size: 32px;
+  font-size: 1.8rem;
 }
 
 button.primary {

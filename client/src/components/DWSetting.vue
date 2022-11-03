@@ -37,6 +37,9 @@
         <DWButton size="medium" type="warning" @click="onUpdate"
           >UPDATE</DWButton
         >
+        <DWButton size="large" type="danger" @click="onDeleteAccount"
+          >DELETE ACCOUNT</DWButton
+        >
       </div>
     </div>
   </div>
@@ -157,6 +160,9 @@ export default {
         this.goalInput.isError = false;
       }
     },
+    onDeleteAccount() {
+      this.$emit("onConfirmDeletion");
+    },
   },
 };
 </script>
@@ -270,6 +276,7 @@ export default {
 
 .container > div.buttons {
   margin-top: 24px;
+  margin-bottom: 24px;
   width: 100%;
   display: flex;
   align-items: stretch;
