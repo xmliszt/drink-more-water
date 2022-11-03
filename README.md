@@ -140,7 +140,8 @@ Once you have all the pre-requisites, we can spin up the container using the `se
 > You should bring this script out of the root folder and run, as it will clone a copy of this project.
 
 ```
-sudo ./setup.sh
+sudo chmod +x ./setup.sh
+./setup.sh
 ```
 
 The script will clone the project into `sutdacademy-drink-water` folder with the source codes within.
