@@ -120,7 +120,7 @@ export default {
         fetchUser(username)
           .then((response) => {
             let user = response.data;
-            if (typeof user === Object) {
+            if (user.name !== undefined) {
               this.startWithUser(user);
             } else {
               this.onAuthFailed();
