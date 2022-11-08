@@ -1,0 +1,1370 @@
+{
+	"info": {
+		"_postman_id": "4ca397aa-7eaf-4490-b9ef-47e484078ead",
+		"name": "Drink Water API",
+		"description": "HAR To Postman Generated Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "7524840-4ca397aa-7eaf-4490-b9ef-47e484078ead"
+	},
+	"item": [
+		{
+			"name": "Add A Record",
+			"id": "c2598db9-1e0e-45a2-b317-d794cba5ba23",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"admin\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL1}}/api/record",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"record"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "4e71fe09-2432-4df5-8e7b-117fa3322409",
+					"name": " / 501",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL1}}/api/record",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"record"
+							]
+						}
+					},
+					"status": "Not Implemented",
+					"code": 501,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "126"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7e-+6jSRlQalIXPe1xdE/8MU+ee87I\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Oct 2022 14:35:31 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get All Records",
+			"id": "e0f670d1-bf33-47b5-ac58-7f0b31da1df0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/record/all",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"record",
+						"all"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "805e9e6e-b2f9-4927-99f4-e2506fcaeaa9",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/record/all",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"record",
+								"all"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:15:20 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1107"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"453-f6DjYBMPCJSHVr+po/5jBYKD3l0\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get Record by ID",
+			"id": "1131e79b-af5b-4369-87a5-beb1fe3efeb7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/record?id=1",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"record"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "e01232c7-eefb-440b-847a-6ab0e24ad712",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/record?id=1",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"record"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:12:57 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "83"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"53-IbCqVXsAFeiPjkAoU7t0IbQ0T6U\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Delete Record by ID",
+			"id": "2af4777e-2ee1-486c-998f-3843149e9487",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/record?id=1",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"record"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "83b4e536-6d99-40d6-b1ae-60047f4749c8",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/record?id=1",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"record"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:13:03 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get All Records by Name",
+			"id": "7a6d8388-4e6d-410c-a325-1c466d8701c0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/record/all?name=Yuxuan",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"record",
+						"all"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Yuxuan"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "0173c899-0654-41dc-a85c-1b4cecbcbe12",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/record/all?name=Yuxuan",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"record",
+								"all"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Yuxuan"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:13:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1d-rQFbDo+yGtXiTh71djHL4HJp0VU\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get Total Volume Today by Name",
+			"id": "a8c8ee1b-aee1-4783-86a1-83a533bcf058",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/record/volume?name=Yuxuan",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"record",
+						"volume"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Yuxuan"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "0d525ef4-c596-470e-81e7-4afde24696d7",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/record/volume?name=Yuxuan",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"record",
+								"volume"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Yuxuan"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:13:18 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1e-6voUWQ0l2UO9+RQd3tcT228mXpY\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Increment User Point",
+			"id": "3666bb46-d379-4586-996c-9e91dcfb6003",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/user/point/increment?name=yuxuan",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"point",
+						"increment"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "yuxuan"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "f068125c-55c0-4dca-9e86-ebe5b6e498d2",
+					"name": " / 501",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/user/point/increment?name=yuxuan",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"point",
+								"increment"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "yuxuan"
+								}
+							]
+						}
+					},
+					"status": "Not Implemented",
+					"code": 501,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:13:25 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "110"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"6e-HySyykscmvOgfVvEPOjUDxiwXyE\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Update User's Goal",
+			"id": "7a8bd805-3087-4fff-9087-49077c9d52b5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"admin\",\n    \"goal\": 1000\n}"
+				},
+				"url": {
+					"raw": "{{baseURL1}}/api/user/goal",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"goal"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "dc0d22e5-51e1-4267-924a-d95971d0dd0e",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"admin\",\n    \"goal\": 1000\n}"
+						},
+						"url": {
+							"raw": "{{baseURL1}}/api/user/goal",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"goal"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "126"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"7e-m1SAkEZseyceVZLgboGbVHTbNaE\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 31 Oct 2022 15:09:35 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Update User's Volume",
+			"id": "af4d9d28-a76c-4659-a73b-6667e120c1d6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"admin\",\n    \"volume\": 1000\n}"
+				},
+				"url": {
+					"raw": "{{baseURL1}}/api/user/volume",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"volume"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "86729fcc-e0f6-4544-bdc1-c8255ea08de0",
+					"name": " / 501",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"admin\",\n    \"volume\": 1000\n}"
+						},
+						"url": {
+							"raw": "{{baseURL1}}/api/user/volume",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"volume"
+							]
+						}
+					},
+					"status": "Not Implemented",
+					"code": 501,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "95"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5f-tIdm2gbpEpEV1KfT/R/x+XxMNiU\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Oct 2022 14:34:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Delete User by Name",
+			"id": "d8b81df4-a6ff-4439-ad8a-4a4736f15695",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/user?name=yuxuan",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "yuxuan"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "9ef75275-e165-4472-8996-158b7eff341f",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/user?name=yuxuan",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "yuxuan"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Oct 2022 14:41:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get All Users",
+			"id": "e095a25e-ce5a-4521-8e54-64481de75a25",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/user/all",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"all"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "01fd209e-36df-4416-9d9f-7c073bc4dea7",
+					"name": "no response code found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/user/all",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"all"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Get User by Name",
+			"id": "b80ec756-af6b-4244-9a8c-0f831aff4d6f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/user?name=Yuxuan",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Yuxuan"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "c8391010-6f74-49fc-b624-6519afd5c836",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/user?name=Yuxuan",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Yuxuan"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:13:51 GMT"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Create A New User",
+			"id": "5aa6debf-23e9-4153-9f6d-ff729f0444f5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"guest\",\n    \"password\": null\n}"
+				},
+				"url": {
+					"raw": "{{baseURL1}}/api/user",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "a9a19687-b969-4fad-9ca0-cf5e6154ffad",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"guest\",\n    \"password\": null\n}"
+						},
+						"url": {
+							"raw": "{{baseURL1}}/api/user",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:13:57 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"10-oV4hJxRVSENxc/wX8+mA4/Pe4tA\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Add Point to User",
+			"id": "19dd32bb-d7ac-4e2e-96aa-ce0fe59f01c7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"admin\",\n    \"point\": 1\n}"
+				},
+				"url": {
+					"raw": "{{baseURL1}}/api/user/point",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"point"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "48bec412-8e3b-40a9-ac05-8dde9fa3c757",
+					"name": " / 501",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"admin\",\n    \"point\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseURL1}}/api/user/point",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"point"
+							]
+						}
+					},
+					"status": "Not Implemented",
+					"code": 501,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:14:03 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "83"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"53-eKX4eWfMFet6EEaLlQoyDiw5x2Q\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get Rank",
+			"id": "b0526a93-ef60-46bd-b40a-52bee54bcf00",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL1}}/api/user/rank",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"rank"
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "49bbb077-3066-442a-b7fe-c902cf0fe9da",
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL1}}/api/user/rank",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"rank"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.18.0 (Ubuntu)"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 04 Nov 2022 17:14:09 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2207"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"89f-T+iRgaPW37SXi49IzyOMk24Udqo\""
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=utf-8 content type is not supported in the response body"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "45fb5e23-55e8-4906-8dbb-c500701d6b32",
+			"key": "baseURL1",
+			"value": "https://yuxuan.sutdacademytools.net",
+			"type": "any"
+		}
+	]
+}

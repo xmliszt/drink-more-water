@@ -4,6 +4,8 @@
 
 <a href="https://yuxuan.sutdacademytools.net">Start Drink Water Today!</a></p>
 
+[Postman - Drink Water API Documentation](https://www.postman.com/xmliszt/workspace/for-public/documentation/7524840-ae4125c0-ac1c-495f-b5ad-f67f3fec03a9)
+
 ---
 
 - [Drink Water 😊💦](#drink-water-)
@@ -26,6 +28,7 @@
       - [Attack](#attack-1)
       - [Solution](#solution-1)
     - [Alternative to JWT Token](#alternative-to-jwt-token)
+  - [API Documentation](#api-documentation)
 
 ## Overview
 
@@ -273,3 +276,7 @@ Attacker cannot re-create the JWT Token due to password encryption is only known
 ### Alternative to JWT Token
 
 The web application can also implement OAUTH to get the OAUTH token in place of the JWT Token. Using OAUTH provider such as Google, Facebook, etc. allow the user to use their social accounts to register and login instead. In this case, the attacker also cannot mimic the OAUTH token as it is generated securely at the service provider side.
+
+## API Documentation
+
+![API Documentation](./docs/api.png)
