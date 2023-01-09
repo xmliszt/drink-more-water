@@ -1,11 +1,11 @@
-const db = require("../database/db");
+const client = require("../database/db");
 const moment = require("moment");
 
 // CREATE
 async function createUser(name, password, volume, goal) {
   return new Promise((res, rej) => {
-    db.run(
-      `INSERT INTO users (name, password, volume, goal, point, last_point_updated) VALUES (?,?,?,?,?,?)`,
+    client.query(
+      `INSERT INTO users (name, password, volume, goal, point, last_point_updated) VALUES ($1,$2,$3,$4,$5,$6)`,
       [name, password, volume || 0, goal || 0, 0, null],
       (err) => {
         if (err) {
@@ -20,19 +20,23 @@ async function createUser(name, password, volume, goal) {
 
 async function getUserByName(name) {
   return new Promise((res, rej) => {
-    db.get(`SELECT * FROM users WHERE name = ?`, [name], (err, row) => {
-      if (err) {
-        rej(err);
-      } else {
-        res(row);
+    client.query(
+      `SELECT * FROM users WHERE name = $1`,
+      [name],
+      (err, result) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(result.rows[0]);
+        }
       }
-    });
+    );
   });
 }
 
 async function deleteUserByName(name) {
   return new Promise((res, rej) => {
-    db.run(`DELETE FROM users WHERE name = ?`, [name], (err) => {
+    client.query(`DELETE FROM users WHERE name = $1`, [name], (err) => {
       if (err) {
         rej(err);
       } else {
@@ -44,15 +48,15 @@ async function deleteUserByName(name) {
 
 async function getAllUsers() {
   return new Promise((res, rej) => {
-    db.all(`SELECT * FROM users`, (err, users) => {
+    client.query(`SELECT * FROM users`, (err, result) => {
       if (err) {
         rej(err);
       } else {
-        users.map((user) => {
+        result.rows.map((user) => {
           user.password = "******";
           return user;
         });
-        res(users);
+        res(result.rows);
       }
     });
   });
@@ -60,8 +64,8 @@ async function getAllUsers() {
 
 async function changeUserGoal(name, newGoal) {
   return new Promise((res, rej) => {
-    db.run(
-      `UPDATE users SET goal = ? WHERE name = ?`,
+    client.query(
+      `UPDATE users SET goal = $1 WHERE name = $2`,
       [newGoal || 0, name],
       (err) => {
         if (err) {
@@ -81,8 +85,8 @@ async function changeUserGoal(name, newGoal) {
 
 async function changeUserVolume(name, newVolume) {
   return new Promise((res, rej) => {
-    db.run(
-      `UPDATE users SET volume = ? WHERE name = ?`,
+    client.query(
+      `UPDATE users SET volume = $1 WHERE name = $2`,
       [newVolume || 0, name],
       (err) => {
         if (err) {
@@ -103,8 +107,8 @@ async function changeUserVolume(name, newVolume) {
 async function updatePoints(name, points) {
   return new Promise((res, rej) => {
     let updatedOn = moment().format("YYYYMMDD");
-    db.run(
-      `UPDATE users SET point = ?, last_point_updated = ? WHERE name = ?`,
+    client.query(
+      `UPDATE users SET point = $1, last_point_updated = $2 WHERE name = $3`,
       [points, updatedOn, name],
       (err) => {
         if (err) {

@@ -233,7 +233,7 @@ router.put("/point/increment", (req, res) => {
   getUserByName(name)
     .then((user) => {
       const pointLastUpdatedOn = user.last_point_updated;
-      const now = Number(moment().format("YYYYMMDD"));
+      const now = moment().format("YYYYMMDD");
       if (pointLastUpdatedOn === now) {
         // Already updated
         res.status(200).send({

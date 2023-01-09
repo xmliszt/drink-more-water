@@ -1,13 +1,13 @@
-const db = require("../database/db");
+const client = require("../database/db");
 const moment = require("moment");
 const { getUserByName } = require("./userService");
 
 async function createRecord(name) {
   return new Promise((res, rej) => {
     let createdOn = moment().format("YYYYMMDD");
-    db.run(
-      `INSERT INTO record (id, username, created_on) VALUES (?,?,?)`,
-      [null, name, createdOn],
+    client.query(
+      `INSERT INTO record (username, created_on) VALUES ($1,$2)`,
+      [name, createdOn],
       (err) => {
         if (err) {
           rej(err);
@@ -19,45 +19,53 @@ async function createRecord(name) {
   });
 }
 
-async function getRecordByID(id) {
+async function getRecorclientyID(id) {
   return new Promise((res, rej) => {
-    db.get(`SELECT * FROM record WHERE id = ? LIMIT 1`, [id], (err, row) => {
-      if (err) {
-        rej(err);
-      } else {
-        res(row);
+    client.query(
+      `SELECT * FROM record WHERE id = $1 LIMIT 1`,
+      [id],
+      (err, result) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(result.rows[0]);
+        }
       }
-    });
+    );
   });
 }
 
 async function getRecordsByName(name) {
   return new Promise((res, rej) => {
-    db.all(`SELECT * from record WHERE username = ?`, [name], (err, rows) => {
-      if (err) {
-        rej(err);
-      } else {
-        res(rows);
+    client.query(
+      `SELECT * from record WHERE username = $1`,
+      [name],
+      (err, rows) => {
+        if (err) {
+          rej(err);
+        } else {
+          res(rows);
+        }
       }
-    });
+    );
   });
 }
 
 async function getAllRecords() {
   return new Promise((res, rej) => {
-    db.all(`SELECT * from record`, (err, rows) => {
+    client.query(`SELECT * from record`, (err, result) => {
       if (err) {
         rej(err);
       } else {
-        res(rows);
+        res(result.rows);
       }
     });
   });
 }
 
-async function deleteRecordByID(id) {
+async function deleteRecorclientyID(id) {
   return new Promise((res, rej) => {
-    db.run(`DELETE FROM record WHERE id = ?`, [id], (err) => {
+    client.query(`DELETE FROM record WHERE id = $1`, [id], (err) => {
       if (err) {
         rej(err);
       } else {
@@ -70,14 +78,14 @@ async function deleteRecordByID(id) {
 async function getTotalVolumeByCurrentDay(name) {
   return new Promise((res, rej) => {
     let today = moment().format("YYYYMMDD");
-    db.get(
-      `SELECT COUNT(*) FROM record WHERE created_on = ? AND username = ?`,
+    client.query(
+      `SELECT COUNT(*) FROM record WHERE created_on = $1 AND username = $2`,
       [Number(today), name],
-      (err, row) => {
+      (err, result) => {
         if (err) {
           rej(err);
         } else {
-          let count = row["COUNT(*)"];
+          let count = Number(result.rows[0].count);
           getUserByName(name)
             .then((user) => {
               let volume = user.volume;
@@ -92,9 +100,9 @@ async function getTotalVolumeByCurrentDay(name) {
 
 module.exports = {
   createRecord,
-  getRecordByID,
+  getRecorclientyID,
   getRecordsByName,
   getAllRecords,
-  deleteRecordByID,
+  deleteRecorclientyID,
   getTotalVolumeByCurrentDay,
 };

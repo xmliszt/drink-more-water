@@ -31,7 +31,9 @@ export default {
         const user = getUser();
         if (user) {
           const username = user.name;
-          addOnePoint(username);
+          const lastUpdated = user.last_point_updated;
+          const today = new Date();
+          !this.compareDates(today, lastUpdated) && addOnePoint(username);
           return "You have completed today's goal and earned yourself 1 point!";
         } else {
           return "";
@@ -42,6 +44,19 @@ export default {
     },
   },
   methods: {
+    compareDates(today, lastUpdated) {
+      var year = today.getFullYear();
+      var month = "" + today.getMonth() + 1;
+      var day = "" + today.getDate();
+      if (month.length < 2) {
+        month = "0" + month;
+      }
+      if (day.length < 2) {
+        day = "0" + day;
+      }
+      const todayFormatted = `${year}${month}${day}`;
+      return String(todayFormatted) === lastUpdated;
+    },
     setTotalVolume(volume) {
       this.totalVolume = volume;
       let percentage = Math.floor((volume / this.goal) * 100);
